@@ -1,11 +1,15 @@
 package ru.iKozlovtsev.tgBot;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.iKozlovtsev.tgBot.entity.*;
 import ru.iKozlovtsev.tgBot.repository.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 class FillingTests
 {
@@ -25,6 +29,7 @@ class FillingTests
     private OrderProductRepository orderProductRepository;
 
     @Test
+    @Order(1)
     void createTwoClients(){
         Client client1 = new Client();
         client1.setAddress("address1");
@@ -42,6 +47,7 @@ class FillingTests
     }
 
     @Test
+    @Order(2)
     void createMainCategories() {
         Category pizza = new Category();
         pizza.setName("Пицца");
@@ -61,7 +67,22 @@ class FillingTests
     }
 
     @Test
+    @Order(3)
     void createSubcategories() {
+        Client client1 = new Client();
+        client1.setAddress("address1");
+        client1.setExternalId(1L);
+        client1.setFullName("fullName1");
+        client1.setPhoneNumber("+94385400000000");
+        clientRepository.save(client1);
+
+        Client client2 = new Client();
+        client2.setAddress("address2S");
+        client2.setExternalId(2L);
+        client2.setFullName("fullName2");
+        client2.setPhoneNumber("+94385");
+        clientRepository.save(client2);
+
         Category classicRolls = new Category();
         classicRolls.setName("Классические Роллы");
         classicRolls.setParent(categoryRepository.findCategoryByName("Роллы"));
@@ -114,6 +135,7 @@ class FillingTests
     }
 
     @Test
+    @Order(4)
     void createProducts(){
         Product pineapplePizza =  new Product();
         pineapplePizza.setName("Pineapple Pizza");
@@ -138,6 +160,7 @@ class FillingTests
     }
 
     @Test
+    @Order(5)
     void createOrders(){
         ClientOrder order1 = new ClientOrder();
         order1.setClient(clientRepository.findById(1L).orElse( null));
@@ -150,12 +173,33 @@ class FillingTests
         order2.setStatus(1);
         order2.setTotal(2423.234);
         clientOrderRepository.save(order2);
+
+        ClientOrder order3 = new ClientOrder();
+        order3.setClient(clientRepository.findById(2L).orElse( null));
+        order3.setStatus(1);
+        order3.setTotal(2432323.234);
+        clientOrderRepository.save(order3);
     }
 
     @Test
+    @Order(6)
     void createOrderProductRelations(){
         OrderProduct op1 = new OrderProduct();
         op1.setProduct(productRepository.findByName("Grape Juice"));
         op1.setClientOrder(clientOrderRepository.findById(1L).orElse( null));
+        op1.setCountProduct(2);
+        orderProductRepository.save(op1);
+
+        OrderProduct op2 = new OrderProduct();
+        op2.setProduct(productRepository.findByName("Pineapple Pizza"));
+        op2.setClientOrder(clientOrderRepository.findById(2L).orElse( null));
+        op2.setCountProduct(500);
+        orderProductRepository.save(op2);
+
+        OrderProduct op3 = new OrderProduct();
+        op3.setProduct(productRepository.findByName("Grape Juice"));
+        op3.setClientOrder(clientOrderRepository.findById(3L).orElse( null));
+        op3.setCountProduct(2000);
+        orderProductRepository.save(op3);
     }
 }
