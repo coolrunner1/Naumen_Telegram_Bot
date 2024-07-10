@@ -22,11 +22,6 @@ public class ProductRestController {
         return productService.getProductsByCategoryId(categoryId);
     }
 
-    @GetMapping(value = "/rest/clients/{id}/products")
-    public List<Product> getClientProducts(@PathVariable Long id){
-        return productService.getClientProducts(id);
-    }
-
     @GetMapping(value = "/rest/products/popular")
     public List<Product> getTopPopularProducts(@RequestParam Integer limit) {
         return productService.getTopPopularProducts(limit);
