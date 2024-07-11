@@ -1,5 +1,7 @@
 package ru.iKozlovtsev.tgBot;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -144,7 +146,7 @@ class FillingTests
         pineapplePizza.setPrice(79445.34);
         productRepository.save(pineapplePizza);
 
-        Product  grapeJuice = new Product();
+        Product grapeJuice = new Product();
         grapeJuice.setName("Grape Juice");
         grapeJuice.setDescription("Juice made of grapes");
         grapeJuice.setPrice(5849234.324324);
@@ -157,6 +159,18 @@ class FillingTests
         orangeJuice.setCategory(categoryRepository.findCategoryByName("Соки"));
         orangeJuice.setPrice(39428.324324);
         productRepository.save(orangeJuice);
+
+        Random random = new Random();
+        Long last = categoryRepository.findCategoryByName("Соки").getId();
+        for (int i=0; i<1000; i++)
+        {
+            Product product = new Product();
+            product.setName("placeholder №"+i);
+            product.setDescription("placeholder item");
+            product.setCategory(categoryRepository.findById(random.nextLong(1, last)).orElse(null));
+            product.setPrice(random.nextDouble(100000, 100000000));
+            productRepository.save(product);
+        }
     }
 
     @Test

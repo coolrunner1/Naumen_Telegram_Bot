@@ -225,6 +225,8 @@ public class TgBotService
                         return REGISTRATION;
                     }
                     clientService.createClient(update.message().from(), phoneNumber, address);
+                    bot.execute(new SendMessage(update.message().chat().id(),
+                            "Успешно создан аккаунт!").replyMarkup(backMarkup()));
                     return MENU;
                 }
                 case "Назад" ->
@@ -318,11 +320,11 @@ public class TgBotService
                 Long chatId = update.callbackQuery().from().id();
                 String data = update.callbackQuery().data();
 
-                System.out.println(data);
+                //System.out.println(data);
 
                 if (data.contains("product:"))
                 {
-                    System.out.println(data.substring(data.lastIndexOf(":") + 1));
+                    //System.out.println(data.substring(data.lastIndexOf(":") + 1));
                     orderProductService.createOrderProduct(clientOrder, Long.parseLong(data.substring(data.lastIndexOf(":") + 1)));
                     orderIsEmpty=false;
                 }
