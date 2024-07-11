@@ -330,6 +330,10 @@ public class TgBotService
             else
             {
                 //mainManuMessages.itemMenuMessage(categoryId);
+                if (update.message()==null)
+                {
+                    return categoryId;
+                }
                 String userMessage = update.message().text();
                 switch (userMessage)
                 {
@@ -404,21 +408,22 @@ public class TgBotService
     {
         if (update.callbackQuery()==null)
         {
-            if (!clientService.clientExists(update.message().from().id()))
-            {
-                Registration registration = new Registration(update);
-                switch (currentScreen){
-                    case REGISTRATION -> {
-                        currentScreen=registration.registrationForm();
+            if (update.message()!=null) {
+                if (!clientService.clientExists(update.message().from().id())) {
+                    Registration registration = new Registration(update);
+                    switch (currentScreen) {
+                        case REGISTRATION -> {
+                            currentScreen = registration.registrationForm();
+                        }
+                        case ADDRESS -> {
+                            currentScreen = registration.addressForm();
+                        }
+                        case PHONE -> {
+                            currentScreen = registration.phoneForm();
+                        }
                     }
-                    case ADDRESS -> {
-                        currentScreen=registration.addressForm();
-                    }
-                    case PHONE -> {
-                        currentScreen=registration.phoneForm();
-                    }
+                    return;
                 }
-                return;
             }
         }
 
