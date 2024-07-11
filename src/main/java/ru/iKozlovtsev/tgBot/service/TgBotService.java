@@ -367,6 +367,7 @@ public class TgBotService
                             clientOrderService.closeOrder(update.message().from().id());
                             bot.execute(new SendMessage(update.message().chat().id(),
                                     "Заказ был создан успешно!").replyMarkup(backMarkup()));
+                            orderIsEmpty=true;
                         }
                         return null;
                     }
