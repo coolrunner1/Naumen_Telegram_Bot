@@ -11,12 +11,13 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long>
 {
     Product findByName(String name);
+
     @Query("from Product prod " +
             "join OrderProduct ord_prod on prod.id=ord_prod.product.id " +
             "join ClientOrder ord on ord_prod.clientOrder.id=ord.id " +
             "where ord.client.id=:id")
-
     List<Product> findClientProducts(Long id);
+
     @Query("from Product prod " +
             "join OrderProduct ord_prod on prod.id=ord_prod.product.id " +
             "group by prod.id " +

@@ -14,4 +14,10 @@ public interface ClientOrderService
      * @param id идентификатор клиента
      */
     List<ClientOrder> getClientOrders(Long id);
+
+    ClientOrder getOpenedClientOrderByTelegramId(Long id);
+
+    void createClientOrder(Long id);
+
+    void closeOrder(Long id);
 }

@@ -1,5 +1,6 @@
 package ru.iKozlovtsev.tgBot.service;
 
+import com.pengrad.telegrambot.model.User;
 import ru.iKozlovtsev.tgBot.entity.Client;
 
 import java.util.List;
@@ -16,4 +17,21 @@ public interface ClientService
     default List<Client> searchClientsByName(String name) {
         throw new UnsupportedOperationException("Доп. задание");
     }
+    /**
+     * Adds a new client to the database
+     * @param user information about user gathered from telegram api
+     * @param phoneNumber client's number
+     * @param address client's address
+     */
+    void createClient(User user, String phoneNumber, String address);
+    /**
+     * Checks if client is registered
+     * @param id telegram id of the client
+     */
+    boolean clientExists(Long id);
+    /**
+     * Gets client by telegram id
+     * @param id telegram id of the client
+     */
+    Client getClientByTelegramId(Long id);
 }
