@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class TgBotService
 {
-    private final TelegramBot bot = new TelegramBot("6483798891:AAELbdPew0EpUoMOlibq8uYQUFt-O-j0Uxs");
+    private final TelegramBot bot = new TelegramBot("APIKEY");
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ClientService clientService;
@@ -167,7 +167,7 @@ public class TgBotService
                     address=userMessage;
                     addressFilled=true;
                     bot.execute(new SendMessage(update.message().chat().id(),
-                            "Успешно принят адресс!"));
+                            "Успешно принят адрес!"));
                     registrationMessages.registrationMessage();
                     return REGISTRATION;
                 }
