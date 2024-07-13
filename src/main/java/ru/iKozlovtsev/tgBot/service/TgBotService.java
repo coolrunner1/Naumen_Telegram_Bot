@@ -203,6 +203,10 @@ public class TgBotService
         public int registrationForm()
         {
             registrationMessages.registrationMessage();
+            if (userMessage==null)
+            {
+                return REGISTRATION;
+            }
             switch (userMessage){
                 case "/start" ->
                 {

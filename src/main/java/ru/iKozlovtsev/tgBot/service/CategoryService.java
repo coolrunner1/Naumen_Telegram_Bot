@@ -14,5 +14,9 @@ public interface CategoryService {
      */
     List<Category> getCategoriesByParentId(Long id);
 
+    /**
+     * Returns id of the category by the category name
+     * @param name name of the category
+     */
     Long getCategoryIdByName(String name);
 }
